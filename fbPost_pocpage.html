@@ -35,31 +35,37 @@
             });
         };
 
-        FB.ui({
-            method: 'share',
-            href: imageUrl,
-            quote: shareText
-        }, function(response) {
-            if (response && !response.error_code) {  // Check for error_code first
-                alert('Successfully shared!');
-            } else {
-                let errorMessage = "Failed to share.";
-                if (response) {
-                    if (response.error_message) {
-                        errorMessage += "  Error message: " + response.error_message;
-                    } else if (response.error_code) {
-                        errorMessage += " Error code: " + response.error_code;
-                    } else if (response.error_msg) {  // Some older SDK versions use error_msg
-                        errorMessage += " Error message: " + response.error_msg;
-                    }
-                    console.error('Error sharing:', response); // Log the entire response object
+        // Function to share content on Facebook
+        function shareOnFacebook() {
+            const imageUrl = 'https://nadkarniu.sirv.com/Images/VW%20Beetle.jpg';
+            const shareText = 'Check out this amazing VW Beetle!';
+
+            // Use the Facebook Share Dialog
+            FB.ui({
+                method: 'share',
+                href: imageUrl, // The URL to share (can be the image or a webpage)
+                quote: shareText // Optional caption text
+            }, function(response) {
+                if (response && !response.error_message) {
+                    alert('Successfully shared!');
                 } else {
-                    errorMessage += " No response received from Facebook.";
-                    console.error('Error sharing: No response from Facebook.');
+                    let errorMessage = "Failed to share.";
+                    if (response) {
+                        if (response.error_message) {
+                            errorMessage += "  Error message: " + response.error_message;
+                        } else if (response.error_code) {
+                            errorMessage += " Error code: " + response.error_code;
+                        } else if (response.error_msg) {  // Some older SDK versions use error_msg
+                            errorMessage += " Error message: " + response.error_msg;
+                        }
+                        console.error('Error sharing:', response); // Log the entire response object
+                    } else {
+                        errorMessage += " No response received from Facebook.";
+                        console.error('Error sharing: No response from Facebook.');
+                    }
+                    alert(errorMessage);
                 }
-                alert(errorMessage);
-            }
-        });
+            });
         }
     </script>
 </body>
