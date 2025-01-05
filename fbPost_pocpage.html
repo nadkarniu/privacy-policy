@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Image and Text to Facebook</title>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <style>
+        img {
+            width: 2in;
+            height: 2in;
+        }
+    </style>
+</head>
+<body>
+    <h1>Share Image and Text to Facebook</h1>
+
+    <!-- Display the hardcoded image -->
+    <div>
+        <img id="previewImage" src="https://nadkarniu.sirv.com/Images/VW%20Beetle.jpg" alt="Preview of VW Beetle" />
+        <p>Check out this amazing VW Beetle!</p>
+    </div>
+
+    <!-- Button to open the Facebook Share Dialog -->
+    <button onclick="shareOnFacebook()">Share to Facebook</button>
+
+    <script>
+        // Initialize the Facebook SDK
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1311242600029537', // Replace with your App ID
+                cookie: true,
+                xfbml: true,
+                version: 'v21.0'
+            });
+        };
+
+        function shareOnFacebook() {
+            const imageUrl = 'https://nadkarniu.sirv.com/Images/VW%20Beetle.jpg';
+            const shareText = 'Check out this amazing VW Beetle!';
+
+            // Use the Facebook Share Dialog
+            FB.ui({
+                method: 'share',
+                href: imageUrl, // The URL to share (can be the image or a webpage)
+                quote: shareText // Optional caption text
+            }, function (response) {
+                if (response && !response.error_message) {
+                    alert('Successfully shared!');
+                } else {
+                    console.error('Error sharing:', response.error_message);
+                    alert('Failed to share. Check the console for more details.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
